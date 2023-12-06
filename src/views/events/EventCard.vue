@@ -1,0 +1,70 @@
+<script>
+export default {
+  props: {
+    event: {
+      type: Object,
+      required: true,
+      default: () => ({
+        id: -1,
+        artist: 'ARTIST',
+        eventType: 'EVENT TYPE',
+        image: 'https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg',
+        location: 'LOCATION',
+        state: null,
+        country: 'COUTRY',
+        date: 'DATE',
+        time: 'TIME',
+        ticket: 0,
+      }),
+    },
+  },
+  emits: ['seeMore'],
+
+};
+</script>
+
+<template>
+  <article>
+    <div class="info">
+      <img :src="event.image" alt="img">
+
+      <h2>{{ event.artist }}</h2>
+
+      <p>
+        <strong>{{ event.eventType }}</strong>
+      </p>
+      <p>Location: <strong>{{ event.location }}</strong></p>
+      <p v-if="event.state">
+        State: <strong>{{ event.state }}</strong>
+      </p>
+      <p>Country: <strong>{{ event.country }}</strong></p>
+      <p>Date: <strong>{{ event.date }}</strong></p>
+    </div>
+    <button @click="$emit('seeMore', event.id)">
+      See more...
+    </button>
+  </article>
+</template>
+
+<style scoped>
+article{
+  position: relative;
+}
+.info {
+  height: 580px;
+
+}
+.icon{
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+}
+
+img {
+    float: left;
+    width:  100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+</style>

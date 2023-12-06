@@ -1,13 +1,23 @@
 <script>
+import { RouterView } from 'vue-router';
+import AppHeader from './components/AppHeader.vue';
+import AppFooter from './components/AppFooter.vue';
+
 export default {
   components: {
-
+    AppHeader,
+    AppFooter,
+    RouterView,
   },
 };
 </script>
 
 <template>
-  <article>
-    <h1>Welcome in Celabra</h1>
-  </article>
+  <AppHeader />
+  <main>
+    <RouterView />
+  </main>
+  <AppFooter />
 </template>
+
+
