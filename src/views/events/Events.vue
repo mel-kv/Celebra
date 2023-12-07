@@ -1,13 +1,15 @@
 <script>
-import { events } from './components/events.json';
-import EventCard from './EventCard.vue';
+import { getAllEvents } from '../../dataProviders/events';
+
+import EventCard from '../events/components/EventCard.vue';
 
 export default {
   components: { EventCard },
-  emits: ['seeMore'],
+  // emits: ['seeMore'],
   data() {
     return {
-      events,
+      events: [],
+      event: {},
 
     };
   },
@@ -15,18 +17,31 @@ export default {
     displayEvents() {
       return this.events;
     },
+
+  },
+  async created() {
+    this.events = await getAllEvents();
+  },
+  methods: {
+    getEvent(id) {
+      this.event = this.events.find((event) => {
+        return event.id === id;
+      });
+      this.$router.push(`/events/${id}`);
+    },
+
   },
 };
 </script>
 
 <template>
-  <div v-if="events.length > 0">
+  <div v-if="events.length > 0 ">
     <div class="events">
       <EventCard
-        v-for="event in displayEvents"
-        :key="event.id"
-        :event="event"
-        @seeMore="$emit('seeMore', $event)"
+        v-for="e in displayEvents"
+        :key="e.id"
+        :event="e"
+        @see-more="getEvent"
       />
     </div>
   </div>

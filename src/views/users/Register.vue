@@ -147,14 +147,13 @@ export default {
 <style scoped>
 .container {
   display: grid;
-  place-items: center;
+
+  padding: 50px;
+
 }
 .error-msg {
   color: red;
   font-style: italic;
   font-size: small;
-}
-input {
-  margin-bottom: 5px;
 }
 </style>

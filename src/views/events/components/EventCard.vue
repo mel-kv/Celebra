@@ -15,24 +15,36 @@ export default {
         date: 'DATE',
         time: 'TIME',
         ticket: 0,
+        vacants: 0,
       }),
+      soldOut: false,
     },
   },
   emits: ['seeMore'],
+  methods: {
+
+  },
 
 };
 </script>
 
 <template>
   <article>
-    <div class="info">
+    <div class="info" @checkVacant="isSoldOut(event.vacants)">
       <img :src="event.image" alt="img">
 
       <h2>{{ event.artist }}</h2>
 
+      <p v-if="event.vacants === 0" class="zero">
+        SOLD OUT
+      </p>
+      <p v-else-if="event.vacants < 30" class="smallNum">
+        Hurry up! Only {{ event.vacants }} ticket(s) left!!!
+      </p>
       <p>
         <strong>{{ event.eventType }}</strong>
       </p>
+
       <p>Location: <strong>{{ event.location }}</strong></p>
       <p v-if="event.state">
         State: <strong>{{ event.state }}</strong>
@@ -40,6 +52,7 @@ export default {
       <p>Country: <strong>{{ event.country }}</strong></p>
       <p>Date: <strong>{{ event.date }}</strong></p>
     </div>
+
     <button @click="$emit('seeMore', event.id)">
       See more...
     </button>
@@ -51,7 +64,7 @@ article{
   position: relative;
 }
 .info {
-  height: 580px;
+  height: 550px;
 
 }
 .icon{
@@ -63,8 +76,19 @@ article{
 img {
     float: left;
     width:  100%;
-    height: 300px;
+    height: 280px;
     object-fit: cover;
     border-radius: 10px;
+}
+
+.smallNum {
+  color: #ba4493;
+  font-size: smaller;
+}
+
+.zero {
+  color: red;
+  font-size: smaller;
+
 }
 </style>

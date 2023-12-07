@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import Home from '../views/Home.vue';
 import Events from '../views/Events/Events.vue';
+import EventDetails from '../views/Events/EventDetails.vue';
 import Contacts from '../views/Contacts.vue';
 import Cart from '../views/Cart.vue';
 import Register from '../views/users/Register.vue';
@@ -18,6 +19,7 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/profile', component: Profile },
   { path: '/favorites', component: Favorites },
+  { path: '/events/:id', component: EventDetails, name: 'details', props: true },
 
 ];
 

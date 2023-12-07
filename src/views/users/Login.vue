@@ -37,6 +37,7 @@ export default {
           type="email"
           name="email"
           :disabled="isLoading"
+          required
         >
       </div>
       <div>
@@ -47,6 +48,7 @@ export default {
           type="password"
           name="password"
           :disabled="isLoading"
+          required
         >
       </div>
       <button type="submit" :disabled="isLoading">
@@ -59,8 +61,8 @@ export default {
 <style scoped>
 .container {
   display: grid;
-  height: 50vh;
-  place-items: center;
+  padding: 50px;
+
 }
 .wrapper {
   width: 60%;

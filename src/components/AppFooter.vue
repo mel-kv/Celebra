@@ -15,13 +15,14 @@ export default {
 <style scoped>
 footer {
   padding: 0.5em;
-  background: var(--header_background);
+  background: var(--primary);
   color: var(--primary-medium);
   text-align: center;
-  /* position: absolute; */
   bottom: 0;
   width: 100%;
   left: 0;
+  position:static;
+  z-index: 999;
 
 }
 </style>

@@ -8,6 +8,7 @@ export default {
   data() {
     return {
       currentPath: null,
+
     };
   },
   mounted() {
@@ -33,9 +34,11 @@ export default {
     </ul>
 
     <ul>
-      <RouterLink to="/">
-        Home
-      </RouterLink>
+      <li>
+        <RouterLink to="/">
+          Home
+        </RouterLink>
+      </li>
       <li>
         <RouterLink to="/events">
           Events
