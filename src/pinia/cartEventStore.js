@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 
-export const useCartEventStore = defineStore('eventsStore', {
+export const useCartEvents = defineStore('eventsInCartStore', {
   state: () => ({
-    events: [],
+    eventsInCart: [],
 
   }),
   getters: {
@@ -11,7 +11,7 @@ export const useCartEventStore = defineStore('eventsStore', {
 
   actions: {
     addEvent(event) {
-      this.events.push(event);
+      this.eventsInCart.push(event);
     },
   },
 

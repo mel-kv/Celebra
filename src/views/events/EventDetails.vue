@@ -1,7 +1,12 @@
 <script>
 import { getAllEvents } from '../../dataProviders/events';
 
+// import { useCartEvents } from '../../pinia/cartEventStore';
+
+// const { store } = useCartEvents();
+
 export default {
+
   data() {
     return {
       events: [],
@@ -18,6 +23,7 @@ export default {
 
   methods: {
     buy() {},
+    // ...mapActions(useCartEvents, ['addEvent']),
   },
 };
 </script>
@@ -51,13 +57,25 @@ export default {
         <p>Ticket price: ${{ event.ticket }}</p>
         <br>
         <div class="grid">
-          <input v-model="quanity" type="number" name="quantity" placeholder="Quantity"><button @click="buy">
+          <input
+            v-model="quanity"
+            type="number"
+            name="quantity"
+            placeholder="Quantity*"
+            min="1"
+            max="10"
+          >
+          <button @click="buy">
             Buy
           </button>
         </div>
       </div>
     </div>
   </article>
+
+  <p class="note">
+    * Tickets are available on a first-come, first-serve basis while currently-available inventory lasts and aren't guaranteed. Each event has a strict ten (10) ticket limit per customer.
+  </p>
 </template>
 
 <style scoped>
@@ -70,5 +88,10 @@ export default {
   color: red;
   font-size: smaller;
 
+}
+
+.note {
+ font-style: italic;
+ font-size: 0.75rem;
 }
 </style>

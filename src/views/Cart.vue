@@ -1,15 +1,15 @@
 <script>
 import { mapState } from 'pinia';
-import { useCartEventStore } from '../pinia/cartEventStore';
+import { useCartEvents } from '../pinia/cartEventStore';
 
 export default {
   setup() {
-    const eventStore = useCartEventStore();
+    const eventStore = useCartEvents();
     return { eventStore };
   },
 
   computed: {
-    ...mapState(useCartEventStore, ['test', 'events']),
+    ...mapState(useCartEvents, ['test', 'events']),
   },
   mounted() {
     console.log(this.eventStore.events);
