@@ -20,7 +20,6 @@ export default {
     ...mapState(useCartEvents, ['events']),
     totalSum() {
       let sum = 0;
-
       this.eventStore.events.forEach((event) => {
         sum += (event.event?.ticket ?? 0) * event.quantity;
       });
@@ -50,8 +49,8 @@ export default {
   <h1 style="text-align: center;">
     Cart
   </h1>
-  <Loader v-if="isLoading" />
-  <div v-else class="container">
+  <!-- <Loader v-if="isLoading" /> -->
+  <div class="container">
     <article>
       <table>
         <thead>
@@ -87,7 +86,7 @@ export default {
                 type="number"
                 :value="event.quantity"
                 style="width: 5rem;"
-                @input="changeQuantity(event.id, $event)"
+                @input="changeQuantity(event.event.id, $event)"
               >
             </td>
             <td class="price">

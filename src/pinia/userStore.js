@@ -17,16 +17,16 @@ export const useUserStore = defineStore('user', {
     addFavEvent(id) {
       this.favouritesIds.push(id);
     },
-    removeFavEvent(id) {
+    removeFavouriteProduct(id) {
       this.favouritesIds = this.favouritesIds.filter(favourite => favourite !== id);
     },
-    getPersistedProfile() {
-      const persisted = sessionStorage.getItem('user-profile');
-      if (!persisted)
-        return;
-      this.profile = JSON.parse(persisted);
-      this.isAuthenticated = true;
-    },
+    // getPersistedProfile() {
+    //   const persisted = sessionStorage.getItem('user-profile');
+    //   if (!persisted)
+    //     return;
+    //   this.profile = JSON.parse(persisted);
+    //   this.isAuthenticated = true;
+    // },
     logout() {
       this.isAuthenticated = false;
       this.profile = null;

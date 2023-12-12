@@ -83,7 +83,8 @@ export default {
 
         <p>Ticket price: ${{ event.ticket }}</p>
         <br>
-        <div v-if="isAuthenticated && events.vacants > 0">
+
+        <div v-if="isAuthenticated && event.vacants > 0">
           <div class="grid">
             <input
               v-model="quantity"

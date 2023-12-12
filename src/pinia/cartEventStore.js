@@ -12,24 +12,26 @@ export const useCartEvents = defineStore('eventsStore', {
 
   actions: {
     addEvent(event, selectedId, selectedQuantity) {
-      const eventsInCard = this.events.find(event => event.id === selectedId);
-      if (!eventsInCard) {
+      const eventInCart = this.events.find(event => event.event.id === selectedId);
+      if (!eventInCart)
         this.events.push({ event, quantity: selectedQuantity });
-        console.log(this.events);
-      }
-      else { eventsInCard.quantity += selectedQuantity; }
+
+      else eventInCart.quantity += selectedQuantity;
     },
-    changeQuantity(eventId, event) {
-      const qty = Number(event.target.value) ?? 0;
-      const eventsInCard = this.events.find(event => event.id === eventId);
-      if (!eventsInCard)
+    changeQuantity(eventId, e) {
+      const qty = Number(e.target.value) ?? 0;
+      const eventInCart = this.events.find(ev => ev.event.id === eventId);
+      console.log(eventInCart);
+
+      if (!eventInCart)
         return;
-      if (qty > 1)
-        eventsInCard.quantity = qty;
+
+      if (qty > 0)
+
+        eventInCart.quantity = qty;
 
       else
-        this.events = this.events.filter(event => event.id !== eventId);
+        this.events = this.events.filter(ev => ev.event.id !== eventId);
     },
-
   },
 });
