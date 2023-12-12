@@ -21,7 +21,6 @@ export const useCartEvents = defineStore('eventsStore', {
     changeQuantity(eventId, e) {
       const qty = Number(e.target.value) ?? 0;
       const eventInCart = this.events.find(ev => ev.event.id === eventId);
-      console.log(eventInCart);
 
       if (!eventInCart)
         return;
