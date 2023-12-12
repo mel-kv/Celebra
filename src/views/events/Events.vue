@@ -1,9 +1,6 @@
-<!-- eslint-disable vue/return-in-computed-property -->
 <script>
 import AppFilters from '../../components/AppFilters.vue';
-
 import { getAllEvents } from '../../dataProviders/events';
-
 import EventCard from '../events/components/EventCard.vue';
 
 export default {
@@ -13,9 +10,9 @@ export default {
     return {
       events: [],
       event: {},
-      selected_type: '',
+      selected_country: '',
       selected_artist: '',
-      categories: null,
+      countries: null,
       artists: null,
 
     };
@@ -24,7 +21,7 @@ export default {
     displayEvents() {
       return this.events.filter((e) => {
         return (
-          (!this.selected_type || e.eventType === this.selected_type)
+          (!this.selected_country || e.country === this.selected_country)
           && (!this.selected_artist || e.artist === this.selected_artist)
         );
       });
@@ -32,7 +29,7 @@ export default {
   },
   async created() {
     this.events = await getAllEvents();
-    this.categories = new Set(this.events.map(event => event.eventType));
+    this.countries = new Set(this.events.map(event => event.country));
     this.artists = new Set(this.events.map(event => event.artist));
   },
   methods: {
@@ -42,11 +39,11 @@ export default {
       });
       this.$router.push(`/events/${id}`);
     },
-    select_artist(artist) {
-      this.selected_artist = artist;
+    select_artist(a) {
+      this.selected_artist = a;
     },
-    select_filter(type) {
-      this.selected_type = type;
+    select_country(c) {
+      this.selected_country = c;
     },
 
   },
@@ -55,7 +52,9 @@ export default {
 </script>
 
 <template>
-  <AppFilters :types="categories" :entertainers="artists" @filter-artist="select_artist" @filter-type="select_filter" />
+  <AppFilters
+    :countries="countries" :entertainers="artists" @filter-artist="select_artist" @filter-country="select_country"
+  />
   <div v-if="events.length > 0 ">
     <div class="events">
       <EventCard

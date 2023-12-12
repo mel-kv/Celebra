@@ -1,30 +1,57 @@
 <script>
+import { mapActions, mapState } from 'pinia';
 import { getAllEvents } from '../../dataProviders/events';
-
-// import { useCartEvents } from '../../pinia/cartEventStore';
-
-// const { store } = useCartEvents();
+import { useCartEvents } from '../../pinia/cartEventStore';
+import { useUserStore } from '../../pinia/userStore';
 
 export default {
-
+  emits: ['onAddToCart'],
   data() {
     return {
       events: [],
       event: {},
       id: Number(this.$route.params.id),
-      quanity: null,
+      quantity: 0,
+      errorMsg: '',
     };
   },
+  computed: {
+    ...mapState(useCartEvents, ['getEvent']),
+    ...mapState(useUserStore, ['favouritesIds', 'isAuthenticated']),
+    isDisabled() {
+      const current = this.getProduct(this.product.id);
+      if (!current)
+        return false;
 
+      return current.quantity >= this.product.stock;
+    },
+    isInFavourites() {
+      return this.favouritesIds.includes(this.product.id);
+    },
+  },
   async created() {
     this.events = await getAllEvents();
     this.event = this.events.find(event => event.id === this.id);
   },
-
   methods: {
-    buy() {},
-    // ...mapActions(useCartEvents, ['addEvent']),
+    ...mapActions(useCartEvents, ['addEvent']),
+    ...mapActions(useUserStore, ['addFavEvent', 'removeFavEvent']),
+    onFavouriteClick() {
+      if (this.isInFavourites)
+        this.removeFavEvent(this.event.id);
+
+      else
+        this.addFavEvent(this.event.id);
+    },
+    addToCart() {
+      if (this.quantity <= this.event.vacants) {
+        this.addEvent(this.event, this.event.id, this.quantity);
+        this.event.vacants -= this.quantity;
+      }
+      else { this.errorMsg = `Only ${this.event.vacants} tickets left! Cannot buy more than that.`; }
+    },
   },
+
 };
 </script>
 
@@ -56,26 +83,35 @@ export default {
 
         <p>Ticket price: ${{ event.ticket }}</p>
         <br>
-        <div class="grid">
-          <input
-            v-model="quanity"
-            type="number"
-            name="quantity"
-            placeholder="Quantity*"
-            min="1"
-            max="10"
-          >
-          <button @click="buy">
-            Buy
-          </button>
+        <div v-if="isAuthenticated && events.vacants > 0">
+          <div class="grid">
+            <input
+              v-model="quantity"
+              type="number"
+              name="quantity"
+              placeholder="Quantity*"
+              min="1"
+            >
+            <button @click="addToCart">
+              Add to Cart
+            </button>
+          </div> <p v-if="errorMsg" class="errorMsg">
+            {{ errorMsg }}
+          </p>
+        </div>
+        <div v-if="!isAuthenticated && event.vacants > 0">
+          If you want to buy tickets you must <RouterLink to="/login">
+            Log In
+          </RouterLink> first!
+        </div>
+        <div v-if="event.vacants === 0">
+          Sorry! The tickets for the current event are SOLD OUT! Find more <RouterLink to="/events">
+            here.
+          </RouterLink>
         </div>
       </div>
     </div>
   </article>
-
-  <p class="note">
-    * Tickets are available on a first-come, first-serve basis while currently-available inventory lasts and aren't guaranteed. Each event has a strict ten (10) ticket limit per customer.
-  </p>
 </template>
 
 <style scoped>
@@ -93,5 +129,9 @@ export default {
 .note {
  font-style: italic;
  font-size: 0.75rem;
+}
+.errorMsg {
+  color: var(--primary);
+  font-style: italic;
 }
 </style>

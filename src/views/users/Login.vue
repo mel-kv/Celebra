@@ -1,5 +1,7 @@
 <script>
+import { mapActions } from 'pinia';
 import { loginUser } from '../../dataProviders/auth';
+import { useUserStore } from '../../pinia/userStore';
 
 export default {
   data() {
@@ -12,17 +14,24 @@ export default {
     };
   },
   methods: {
+    ...mapActions(useUserStore, ['setProfile']),
+
     async onSubmit() {
       this.isLoading = true;
       const userData = await loginUser(this.user);
-      if (userData)
-        this.$router.push('/profile');
-      else
-        this.user.username = '';
-      this.user.password = '';
 
-      this.isLoading = false;
-      window.alert('Wrong username or password!!! Try again!');
+      if (userData) {
+        this.setProfile(userData);
+        this.$router.push('/profile');
+      }
+      else {
+        console.log(userData);
+        this.user.username = '';
+        this.user.password = '';
+        this.isLoading = false;
+        // eslint-disable-next-line no-alert
+        window.alert('Wrong username or password!!! Try again!');
+      }
     },
   },
 };
@@ -67,6 +76,15 @@ export default {
       </button>
     </form>
   </article>
+  <article class="demo">
+    # Added only for the demonstration purposes during the current presentation:
+    <div>
+      username: username: 'kminchelle'
+    </div>
+    <div>
+      password: '0lelplR'
+    </div>
+  </article>
 </template>
 
 <style scoped>
@@ -77,5 +95,9 @@ export default {
 }
 .wrapper {
   width: 60%;
+}
+.demo > div{
+  color: var(--secondary)
+
 }
 </style>

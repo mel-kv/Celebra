@@ -1,5 +1,8 @@
 <script>
 import { RouterLink } from 'vue-router';
+import { mapActions, mapStores } from 'pinia';
+import { useUserStore } from '../pinia/userStore';
+import { useCartEvents } from '../pinia/cartEventStore';
 
 export default {
   components: {
@@ -11,6 +14,10 @@ export default {
 
     };
   },
+  computed: {
+    ...mapStores(useUserStore, ['profile', 'isAuthenticated']),
+    ...mapStores(useCartEvents, ['eventsInCart']),
+  },
   mounted() {
     this.currentPath = this.$route.path;
   },
@@ -18,6 +25,7 @@ export default {
     eventPathChecker() {
       console.log(this.currentPath);
     },
+    ...mapActions(useUserStore, ['logout']),
   },
 
 };
@@ -49,14 +57,32 @@ export default {
           Contacts
         </RouterLink>
       </li>
-      <li>
+      <li v-if="isAuthenticated">
+        <RouterLink to="/profile" class="profileLink">
+          Profile <img :src="profile.image" alt="">
+        </RouterLink>
+      </li>
+      <li v-if="isAuthenticated">
+        <RouterLink to="/favourites">
+          My favourites
+        </RouterLink>
+      </li>
+      <li v-if="isAuthenticated">
+        <RouterLink to="/" @click="logout">
+          Logout
+        </RouterLink>
+      </li>
+      <li v-else>
         <RouterLink to="/login">
           Login
         </RouterLink>
       </li>
       <li>
-        <RouterLink to="/cart">
-          <button>Cart</button>
+        <RouterLink to="/cart" role="button">
+          Cart
+          <!-- Cart <span v-if="eventsInCart">
+            ({{ eventsInCart }})
+          </span> -->
         </RouterLink>
       </li>
     </ul>

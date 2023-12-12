@@ -1,37 +1,34 @@
 <script>
 export default {
   props: {
-    types: Set,
+    countries: Set,
     entertainers: Set,
   },
-  emits: ['filterType', 'filterArtist'],
+  emits: ['filterCountry', 'filterArtist'],
   data() {
     return {
-      selectedType: '',
+      selectedCountry: '',
       selectedArtist: '',
-      typeSel: false,
+      countrySel: false,
       artSel: false,
 
     };
   },
   methods: {
-    typeChanged() {
-      this.typeSel = true;
-      this.$emit('filterType', this.selectedType);
+    countryChanged() {
+      this.countrySel = true;
+      this.$emit('filterCountry', this.selectedCountry);
     },
     artistChanged() {
-      if (this.selectedArtist !== '')
-        this.artSel = true;
-      else
-        this.artSel = false;
+      this.artSel = true;
       this.$emit('filterArtist', this.selectedArtist);
     },
     resetBtn() {
-      this.selectedType = '';
+      this.selectedCountry = '';
       this.selectedArtist = '';
-      this.typeSel = false;
+      this.countrySel = false;
       this.artSel = false;
-      this.$emit('filterType', this.selectedType);
+      this.$emit('filterCountry', this.selectedCountry);
       this.$emit('filterArtist', this.selectedArtist);
     },
   },
@@ -40,14 +37,14 @@ export default {
 
 <template>
   <div class="filt">
-    <div class="filterDiv" :class="typeSel ? 'usedFilter' : 'noFilter'">
-      <label for="type">Filter by type:</label>
-      <select id="type" v-model="selectedType" @change="typeChanged">
+    <div class="filterDiv" :class="countrySel ? 'usedFilter' : 'noFilter'">
+      <label for="country">Filter by country:</label>
+      <select id="country" v-model="selectedCountry" @change="countryChanged">
         <option value="">
           Select
         </option>
-        <option v-for="type of types" :key="type" :value="type">
-          {{ type }}
+        <option v-for="country of countries" :key="country" :value="country">
+          {{ country }}
         </option>
       </select>
     </div>
@@ -64,7 +61,7 @@ export default {
     </div>
     <div class="filterDiv">
       <label for="">&nbsp;</label>
-      <button type="reset" @click="resetBtn">
+      <button country="reset" @click="resetBtn">
         Reset Filters
       </button>
     </div>
