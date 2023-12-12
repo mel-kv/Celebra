@@ -1,4 +1,8 @@
 <script>
+import { mapActions, mapState } from 'pinia';
+import { useCartEvents } from '../../../pinia/cartEventStore';
+import { useUserStore } from '../../../pinia/userStore';
+
 export default {
   props: {
     event: {
@@ -21,8 +25,24 @@ export default {
     },
   },
   emits: ['seeMore'],
-  methods: {
 
+  computed: {
+    ...mapState(useCartEvents, ['getEvents']),
+    ...mapState(useUserStore, ['favouritesIds', 'isAuthenticated']),
+
+    isInFavourites() {
+      return this.favouritesIds.includes(this.event.id);
+    },
+  },
+  methods: {
+    ...mapActions(useUserStore, ['addFavEvent', 'removeFavEvent']),
+    onFavouriteClick() {
+      if (this.isInFavourites)
+        this.removeFavEvent(this.event.id);
+
+      else
+        this.addFavEvent(this.event.id);
+    },
   },
 
 };
@@ -31,6 +51,7 @@ export default {
 <template>
   <article>
     <div class="info" @checkVacant="isSoldOut(event.vacants)">
+      <span v-if="isInFavourites" class="icon">❤️</span>
       <img :src="event.image" alt="img">
       <div>
         <h2>{{ event.artist }}</h2>
@@ -56,6 +77,13 @@ export default {
     <button @click="$emit('seeMore', event.id)">
       See more...
     </button>
+    <button
+      v-if="isAuthenticated"
+      class="secondary outline"
+      @click="onFavouriteClick"
+    >
+      {{ isInFavourites ? 'Remove from favourites' : 'Add to favourites' }}
+    </button>
   </article>
 </template>
 
@@ -64,15 +92,15 @@ article{
   position: relative;
 }
 .info {
-  height: 600px;
+  height: 700px;
   display: grid
 
 }
-/* .icon{
+.icon{
   position: absolute;
   top: 0.25rem;
   right: 0.25rem;
-} */
+}
 
 img {
     float: left;

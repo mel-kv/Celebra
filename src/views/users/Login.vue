@@ -1,19 +1,37 @@
 <script>
+import { mapActions } from 'pinia';
+import { loginUser } from '../../dataProviders/auth';
+import { useUserStore } from '../../pinia/userStore';
+
 export default {
   data() {
     return {
       user: {
-        email: '',
+        username: '',
         password: '',
       },
       isLoading: false,
     };
   },
   methods: {
-    onSubmit() {
+    ...mapActions(useUserStore, ['setProfile']),
+
+    async onSubmit() {
       this.isLoading = true;
-      console.log(this.user, 'onSubmit');
-      this.$router.push('/profile');
+      const userData = await loginUser(this.user);
+
+      if (userData) {
+        this.setProfile(userData);
+        this.$router.push('/profile');
+      }
+      else {
+        console.log(userData);
+        this.user.username = '';
+        this.user.password = '';
+        this.isLoading = false;
+        // eslint-disable-next-line no-alert
+        window.alert('Wrong username or password!!! Try again!');
+      }
     },
   },
 };
@@ -30,12 +48,11 @@ export default {
 
     <form @submit.prevent="onSubmit">
       <div>
-        <label for="email">Email:</label>
+        <label for="username">Username:</label>
         <input
-          id="email"
-          v-model="user.email"
-          type="email"
-          name="email"
+          id="username"
+          v-model="user.username"
+          name="username"
           :disabled="isLoading"
           required
         >
@@ -51,10 +68,22 @@ export default {
           required
         >
       </div>
-      <button type="submit" :disabled="isLoading">
+      <button v-if="isLoading" aria-busy="true">
+        Please wait…
+      </button>
+      <button v-else type="submit" :disabled="isLoading">
         Log in
       </button>
     </form>
+  </article>
+  <article class="demo">
+    # Added only for the demonstration purposes during the current presentation:
+    <div>
+      username: username: 'kminchelle'
+    </div>
+    <div>
+      password: '0lelplR'
+    </div>
   </article>
 </template>
 
@@ -66,5 +95,9 @@ export default {
 }
 .wrapper {
   width: 60%;
+}
+.demo > div{
+  color: var(--secondary)
+
 }
 </style>

@@ -61,7 +61,7 @@ export default {
     <h1>Register</h1>
     <h6>
       Do you have a profile? Go to <RouterLink to="/login">
-        Log in
+        Log In
       </RouterLink>
     </h6>
 
