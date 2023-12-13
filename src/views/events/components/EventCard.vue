@@ -125,7 +125,7 @@ h2 {
 }
 
 h2:hover {
-  color: var(--primary); /* Change to your desired color */
+  color: var(--primary);
 }
 
 .smallNum {
