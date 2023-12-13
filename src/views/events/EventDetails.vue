@@ -137,7 +137,7 @@ export default {
 }
 
 img {
-  max-width: 100%;
+  max-width: 720px;
   border-radius: 10px;
   transition: transform 0.3s ease-in-out;
 }
