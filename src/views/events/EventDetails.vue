@@ -135,4 +135,14 @@ export default {
   color: var(--primary);
   font-style: italic;
 }
+
+img {
+  max-width: 100%;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+img:hover {
+  transform: scale(1.1);
+}
 </style>

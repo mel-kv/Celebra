@@ -74,7 +74,7 @@ export default {
 </template>
 
 <style scoped>
-.card{
+/* .card{
   max-width: 720px;
   margin: 0 auto;
   text-align: center;
@@ -144,5 +144,103 @@ export default {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
-}}
+}} */
+
+.card {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.card img {
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--primary);
+  margin-bottom: 30px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card img:hover {
+  transform: scale(1.1);
+}
+
+.card li {
+  list-style: none;
+}
+
+.card h1 {
+  text-align: start;
+  margin-bottom: 50px;
+}
+
+.eventCard {
+  height: 700px;
+  display: grid;
+}
+
+.eventCard img {
+  float: left;
+  width: 350px;
+  height: 300px;
+  align-self: center;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.eventCard img:hover {
+  transform: scale(1.1);
+}
+
+.eventCard h2 {
+  transition: color 0.3s ease-in-out;
+}
+
+.eventCard:hover h2 {
+  color: var(--primary);
+}
+
+@media screen and (max-width: 600px) {
+  .events {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 800px) and (min-width: 601px) {
+  .events {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 801px) {
+  .events {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 1600px) and (min-width: 1201px) {
+  .events {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media screen and (min-width: 1601px) {
+  .events {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+}
 </style>

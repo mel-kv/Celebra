@@ -88,30 +88,44 @@ export default {
 </template>
 
 <style scoped>
-article{
+article {
   position: relative;
 }
+
 .info {
   height: 700px;
-  display: grid
-
+  display: grid;
 }
-.icon{
+
+.icon {
   position: absolute;
   top: 0.25rem;
   right: 0.25rem;
 }
 
 img {
-    float: left;
-    width:  350px;
-    height: 300px;
-    align-self: center;
-    object-fit:cover;
-    border-radius: 10px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  float: left;
+  width: 350px;
+  height: 300px;
+  align-self: center;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+img:hover {
+  transform: scale(1.1);
+}
+
+h2 {
+  transition: color 0.3s ease-in-out;
+}
+
+h2:hover {
+  color: var(--primary); /* Change to your desired color */
 }
 
 .smallNum {
@@ -122,6 +136,5 @@ img {
 .zero {
   color: red;
   font-size: smaller;
-
 }
 </style>
