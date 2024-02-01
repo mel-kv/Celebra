@@ -8,7 +8,7 @@ export default {
 
 <template>
   <footer class="footer">
-    This project is written by Milena Vangelova for Vue.JS SoftUni Course, 2023/12.
+    This project is written by Milena Vangelova.
   </footer>
 </template>
 

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export async function getAllEvents() {
   try {
-    const res = await axios.get('/public/events.json');
+    const res = await axios.get('/events.json');
 
     return res.data;
   }

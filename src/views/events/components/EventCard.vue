@@ -107,7 +107,7 @@ img {
   float: left;
   width: 350px;
   height: 300px;
-  align-self: center;
+
   object-fit: cover;
   border-radius: 10px;
   display: block;

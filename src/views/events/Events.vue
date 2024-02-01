@@ -65,41 +65,46 @@ export default {
       />
     </div>
   </div>
+  <div v-if="displayEvents.length === 0" class="no-events">
+    There are no events corresponding to the chosen criteria. Try again!
+  </div>
 </template>
 
 <style scoped>
+.no-events {
+  font-size: 32px;
+}
+.events {
+  display: grid;
+  gap: 1rem;
+  justify-content: space-around;
+}
 @media screen and (max-width: 600px) {
   .events {
-  display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 1rem;
 
 }
 }
 
 @media screen and (max-width: 800px) and (min-width: 601px) {
   .events {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
 }}
 
 @media screen and (max-width: 1200px) and (min-width: 801px){
   .events {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
 }}
 @media screen and (max-width: 1600px) and (min-width: 1201px)  {
   .events {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
 }}
 @media screen and (min-width: 1601px)  {
   .events {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+
 }}
 </style>
